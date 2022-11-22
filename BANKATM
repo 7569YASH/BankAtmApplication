@@ -1,0 +1,100 @@
+
+// InvalidCustomerException Class
+
+package com.gqt.Yash;
+
+public class InvalidCustomerException extends Exception
+{
+    public String getMessage()
+    {
+    	return "Invalid input Try again!";
+    }
+}
+
+
+// ATM class
+
+package com.gqt.Yash;
+import java.util.*;
+public class ATM
+{
+   private int acc_num = 3333;
+   private int password = 7777;
+   int ac;
+   int pw;
+   public void acceptInput()
+   {
+	   Scanner scan = new Scanner(System.in);
+	   System.out.println("Enter the account number");
+	   ac = scan.nextInt();
+	   System.out.println("Enter the Password");
+	   pw = scan.nextInt();
+   }
+   public void verify() throws Exception
+   {
+	   if(ac == acc_num && pw == password)
+	   {
+		   System.out.println("Collect Cash");
+	   }
+	   else
+	   {
+		   InvalidCustomerException ice = new InvalidCustomerException();
+		   System.out.println(ice.getMessage());
+		   throw ice;
+	   }
+   }
+}
+
+
+// Bank Class
+package com.gqt.Yash;
+
+public class Bank
+{
+   public void initiate()
+   {
+	   ATM atm = new ATM ();
+	   try
+	   {
+		   atm.acceptInput();
+		   atm.verify();
+	   }
+	   catch(Exception e)
+	   {
+		   try
+		   {
+			   atm.acceptInput();
+			   atm.verify();
+		   }
+		   catch(Exception f)
+		   {
+			   try
+			   {
+				   atm.acceptInput();
+				   atm.verify();
+			   }
+			   catch(Exception g)
+			   {
+				   System.out.println("Card Blocked");
+				   System.exit(0);
+			   }
+		   }
+		   
+	   }
+   }
+}
+
+
+/// Launch Class code
+
+package com.gqt.Yash;
+
+public class Launch
+{
+   public static void main(String []args)
+   {
+	   Bank b = new Bank();
+	   b.initiate();
+   }
+}
+
